@@ -205,3 +205,10 @@ prometheus-data/
 !example.pem
 !example.key
 !example.crt
+
+# Security documentation (mantener solo local)
+_docs/security/
+_docs/operations/cybersecurity*
+*.security.md
+security-*.md
+cybersecurity-*.md
