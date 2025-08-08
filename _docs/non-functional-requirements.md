@@ -126,7 +126,7 @@ add_header X-Content-Type-Options "nosniff" always;
 # .github/workflows/ci.yml
 - name: Quality Gates
   run: |
-    npm run lint        # ESLint + Prettier (Node)
+    pnpm run lint       # ESLint + Prettier (Node) - PNPM preferido
     black --check .     # Python formatting
     golangci-lint run   # Go linting
     sonar-scanner      # SonarQube analysis

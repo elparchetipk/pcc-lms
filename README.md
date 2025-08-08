@@ -95,6 +95,41 @@ cat _docs/infrastructure-traefik.md
 7. IA para recomendaciones básicas
 8. BI para métricas de negocio
 
+## 🛡️ Seguridad
+
+PCC LMS implementa **seguridad multicapa** para deployment en producción:
+
+- 🔐 **Autenticación JWT** con rotación automática
+- 🛡️ **Rate limiting** y protección DDoS
+- 🔒 **SSL/TLS obligatorio** con Let's Encrypt
+- 🚨 **Monitoreo 24/7** con Fail2Ban
+- 📋 **Políticas completas** en [SECURITY.md](SECURITY.md)
+
+Para reportar vulnerabilidades: **security@pcc-lms.com**
+
+## 📚 Documentación Técnica
+
+- 📋 [Requisitos Funcionales](_docs/functional-requirements.md)
+- ⚡ [Requisitos No Funcionales](_docs/non-functional-requirements.md)
+- 📖 [Historias de Usuario](_docs/user-stories.md)
+- 🗄️ [Arquitectura de Base de Datos](_docs/database-architecture.md)
+- 🚀 [Infraestructura Traefik](_docs/infrastructure-traefik.md)
+- 🔒 [Políticas de Ciberseguridad](_docs/cybersecurity-policies.md)
+- 🛠️ [Estándares de Desarrollo](_docs/development-standards.md)
+- 🔐 [Análisis de Seguridad UUID](_docs/uuid-security-analysis.md)
+- 📊 [Scorecard Separación Monorepo](_docs/monorepo-separation-scorecard.md)
+
+## 🤝 Contribuir
+
+¡Las contribuciones son bienvenidas! Lee nuestra [Guía de Contribución](CONTRIBUTING.md) para empezar.
+
+**Estándares obligatorios:**
+
+- ✅ **PNPM** para gestión de dependencias (no NPM/Yarn)
+- ✅ **Clean Architecture** en todos los servicios
+- ✅ **Tests** con cobertura >80%
+- ✅ **Seguridad** verificada antes de merge
+
 ---
 
 **Consultar `.vscode/copilot-instructions.md` para convenciones técnicas detalladas**
