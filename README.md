@@ -29,12 +29,13 @@ LMS moderno con microservicios multi-stack, IA integrada y Business Intelligence
 
 ## 📋 Estado del Proyecto
 
-✅ **Documentación completa** en `/_docs/`
+✅ **Documentación completa** en `/_docs/` (estructura categorizada)
 
-- Requisitos funcionales (RFs) con IA/BI como primer nivel
-- Requisitos no funcionales (RNFs) con SLOs y métricas
-- Historias de usuario y criterios de aceptación
-- Blueprint y visión técnica
+- **Architecture:** Diseño técnico, base de datos, infraestructura
+- **Business:** Requisitos funcionales/no funcionales, user stories
+- **Development:** Estándares de desarrollo y herramientas
+- **Operations:** Métricas, monorepo strategy, separación
+- **Security:** Políticas de ciberseguridad (LOCAL ONLY)
 
 🚧 **Próximos pasos:**
 
@@ -48,17 +49,19 @@ LMS moderno con microservicios multi-stack, IA integrada y Business Intelligence
 ### Documentación
 
 ```bash
-# Revisar requisitos funcionales
-cat _docs/functional-requirements.md
+# Revisar documentación por categorías
+ls _docs/                     # Ver todas las categorías
 
-# Revisar requisitos no funcionales (incluye HATEOAS + Traefik)
-cat _docs/non-functional-requirements.md
+# Architecture
+cat _docs/architecture/database-architecture.md
+cat _docs/architecture/infrastructure-traefik.md
 
-# Revisar arquitectura de base de datos
-cat _docs/database-architecture.md
+# Business Requirements
+cat _docs/business/functional-requirements.md
+cat _docs/business/non-functional-requirements.md
 
-# Revisar infraestructura y monorepo strategy
-cat _docs/infrastructure-traefik.md
+# Development
+cat _docs/development/development-standards.md
 ```
 
 ### Convenciones
@@ -72,7 +75,12 @@ cat _docs/infrastructure-traefik.md
 ## 📁 Estructura
 
 ```text
-├── _docs/                    # Documentación central
+├── _docs/                    # Documentación categorizada
+│   ├── architecture/         # Diseño técnico, DB, infraestructura
+│   ├── business/             # Requisitos, user stories
+│   ├── development/          # Estándares de desarrollo
+│   ├── operations/           # Métricas, monorepo strategy
+│   └── security/             # Ciberseguridad (LOCAL ONLY)
 ├── frontend/                 # React app (por implementar)
 ├── services/                 # Microservicios (por implementar)
 ├── infra/                    # Docker, Nginx, K8s (por implementar)
@@ -105,19 +113,18 @@ PCC LMS implementa **seguridad multicapa** para deployment en producción:
 - 🚨 **Monitoreo 24/7** con Fail2Ban
 - 📋 **Políticas completas** en [SECURITY.md](SECURITY.md)
 
-Para reportar vulnerabilidades: **security@pcc-lms.com**
+Para reportar vulnerabilidades: [security@pcc-lms.com](mailto:security@pcc-lms.com)
 
 ## 📚 Documentación Técnica
 
-- 📋 [Requisitos Funcionales](_docs/functional-requirements.md)
-- ⚡ [Requisitos No Funcionales](_docs/non-functional-requirements.md)
-- 📖 [Historias de Usuario](_docs/user-stories.md)
-- 🗄️ [Arquitectura de Base de Datos](_docs/database-architecture.md)
-- 🚀 [Infraestructura Traefik](_docs/infrastructure-traefik.md)
-- 🔒 [Políticas de Ciberseguridad](_docs/cybersecurity-policies.md)
-- 🛠️ [Estándares de Desarrollo](_docs/development-standards.md)
-- 🔐 [Análisis de Seguridad UUID](_docs/uuid-security-analysis.md)
-- 📊 [Scorecard Separación Monorepo](_docs/monorepo-separation-scorecard.md)
+Ver [`_docs/README.md`](_docs/README.md) para navegación completa por categorías:
+
+- 🏗️ **Architecture:** [`database-architecture.md`](_docs/architecture/database-architecture.md), [`infrastructure-traefik.md`](_docs/architecture/infrastructure-traefik.md)
+- � **Business:** [`functional-requirements.md`](_docs/business/functional-requirements.md), [`user-stories.md`](_docs/business/user-stories.md)
+- � **Development:** [`development-standards.md`](_docs/development/development-standards.md)
+- ⚙️ **Operations:** [`monorepo-separation-scorecard.md`](_docs/operations/monorepo-separation-scorecard.md)
+
+> 🔐 **Nota:** Documentación de seguridad no se sincroniza con GitHub (solo local)
 
 ## 🤝 Contribuir
 
