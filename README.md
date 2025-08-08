@@ -1,4 +1,18 @@
-# PCC LMS — Programar Con Criterio
+# 🎓 PCC LMS — Programar Con Criterio
+
+**LMS Open Source Multi-Stack con IA y Business Intelligence**
+
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)](https://golang.org/)
+[![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Contributors](https://img.shields.io/github/contributors/yourusername/pcc-lms)](https://github.com/yourusername/pcc-lms/graphs/contributors)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+
+---
 
 ## 🎯 Visión
 
@@ -9,7 +23,9 @@ LMS moderno con microservicios multi-stack, IA integrada y Business Intelligence
 - **Frontend único:** React 19 + Vite + Tailwind CSS
 - **Backend:** Microservicios multi-stack (FastAPI, Golang, Express, Spring Boot)
 - **IA y BI:** Servicios de primer nivel para personalización y analytics
-- **Infraestructura:** Docker + Nginx + PostgreSQL + Redis + observabilidad completa
+- **HATEOAS:** APIs hipermedia para navegación dinámica y descubrimiento
+- **Traefik:** API Gateway con service discovery y load balancing automático
+- **Infraestructura:** Docker + Kubernetes + PostgreSQL + Redis + observabilidad completa
 
 ## 📋 Estado del Proyecto
 
@@ -23,7 +39,8 @@ LMS moderno con microservicios multi-stack, IA integrada y Business Intelligence
 🚧 **Próximos pasos:**
 
 - Implementación de microservicios según backlog
-- Setup de infraestructura base
+- Setup de infraestructura con Traefik
+- APIs HATEOAS para descubrimiento dinámico
 - Frontend React con componentes base
 
 ## 🔧 Guía rápida
@@ -34,11 +51,14 @@ LMS moderno con microservicios multi-stack, IA integrada y Business Intelligence
 # Revisar requisitos funcionales
 cat _docs/functional-requirements.md
 
-# Revisar requisitos no funcionales
+# Revisar requisitos no funcionales (incluye HATEOAS + Traefik)
 cat _docs/non-functional-requirements.md
 
-# Revisar backlog de historias de usuario
-cat _docs/user-stories.md
+# Revisar arquitectura de base de datos
+cat _docs/database-architecture.md
+
+# Revisar infraestructura y monorepo strategy
+cat _docs/infrastructure-traefik.md
 ```
 
 ### Convenciones

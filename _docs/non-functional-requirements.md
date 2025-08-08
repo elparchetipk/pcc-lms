@@ -259,6 +259,194 @@ FOR VALUES FROM ('2025-08-01') TO ('2025-09-01');
 
 ---
 
+## RNF-011: API Design y HATEOAS
+
+### Principios de API Hipermedia
+
+**HATEOAS (Hypermedia as the Engine of Application State)** es obligatorio para:
+
+- Navegación dinámica entre recursos relacionados
+- Descubrimiento automático de acciones disponibles
+- Evolución de APIs sin breaking changes
+- Reducción de acoplamiento frontend-backend
+
+### Implementación HATEOAS
+
+```json
+{
+  "id": "course-123",
+  "title": "Clean Architecture en Microservicios",
+  "status": "published",
+  "price": 99.99,
+  "_links": {
+    "self": {
+      "href": "/api/v1/courses/course-123"
+    },
+    "enroll": {
+      "href": "/api/v1/enrollments",
+      "method": "POST",
+      "templated": false
+    },
+    "modules": {
+      "href": "/api/v1/courses/course-123/modules"
+    },
+    "instructor": {
+      "href": "/api/v1/users/instructor-456"
+    }
+  },
+  "_embedded": {
+    "instructor": {
+      "id": "instructor-456",
+      "name": "Tech Expert",
+      "_links": {
+        "self": { "href": "/api/v1/users/instructor-456" }
+      }
+    }
+  }
+}
+```
+
+### Estándares de Hipermedia
+
+- **HAL (Hypertext Application Language):** Para responses estructurados
+- **JSON-LD:** Para contexto semántico en APIs públicas
+- **RFC 5988:** Para rel types estándar (`self`, `next`, `prev`, `edit`)
+
+```typescript
+// Ejemplo de implementación TypeScript
+interface HATEOASResource {
+  _links: {
+    [rel: string]: {
+      href: string;
+      method?: string;
+      templated?: boolean;
+      title?: string;
+    };
+  };
+  _embedded?: {
+    [rel: string]: HATEOASResource | HATEOASResource[];
+  };
+}
+```
+
+---
+
+## RNF-012: API Gateway y Routing (Traefik)
+
+### Traefik como API Gateway
+
+**Traefik** es el reverse proxy y load balancer principal para:
+
+- **Service discovery automático** via Docker labels
+- **SSL/TLS termination** con Let's Encrypt automático
+- **Load balancing** entre instancias de microservicios
+- **Middleware pipeline** para auth, CORS, rate limiting
+
+### Configuración Traefik
+
+```yaml
+# docker-compose.traefik.yml
+version: '3.8'
+services:
+  traefik:
+    image: traefik:v3.0
+    command:
+      - '--api.dashboard=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.websecure.address=:443'
+      - '--certificatesresolvers.letsencrypt.acme.email=admin@pcc-lms.com'
+      - '--certificatesresolvers.letsencrypt.acme.storage=/acme.json'
+      - '--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web'
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8080:8080' # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme.json:/acme.json
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)'
+```
+
+### Microservices Labels
+
+```yaml
+# Ejemplo: auth-service
+auth-service:
+  build: ./be/fastapi/auth-service
+  labels:
+    - 'traefik.enable=true'
+    - 'traefik.http.routers.auth.rule=Host(`api.pcc-lms.com`) && PathPrefix(`/api/v1/auth`)'
+    - 'traefik.http.routers.auth.tls.certresolver=letsencrypt'
+    - 'traefik.http.services.auth.loadbalancer.server.port=8000'
+    - 'traefik.http.middlewares.auth-cors.headers.accesscontrolalloworigin=*'
+    - 'traefik.http.routers.auth.middlewares=auth-cors'
+```
+
+### Middleware Pipeline
+
+```yaml
+# Middleware para rate limiting
+traefik.http.middlewares.api-ratelimit.ratelimit.burst=100
+traefik.http.middlewares.api-ratelimit.ratelimit.average=10
+
+# Middleware para JWT validation
+traefik.http.middlewares.jwt-auth.forwardauth.address=http://auth-service:8000/validate
+traefik.http.middlewares.jwt-auth.forwardauth.authResponseHeaders=X-User-Id,X-User-Role
+
+# Circuit breaker
+traefik.http.middlewares.circuit-breaker.circuitbreaker.expression=NetworkErrorRatio() > 0.3
+```
+
+### Routing Strategy
+
+```
+https://api.pcc-lms.com/
+├── /api/v1/auth/*          → auth-service (FastAPI)
+├── /api/v1/users/*         → users-service (Go)
+├── /api/v1/courses/*       → courses-service (Express)
+├── /api/v1/ai/*            → ai-service (FastAPI)
+├── /api/v1/analytics/*     → analytics-service (Go)
+└── /api/v1/payments/*      → payments-service (Spring Boot)
+```
+
+### Health Checks y Service Discovery
+
+```yaml
+# Health check obligatorio por servicio
+healthcheck:
+  test: ['CMD', 'curl', '-f', 'http://localhost:8000/health']
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+
+# Labels para health check
+labels:
+  - 'traefik.http.services.auth.loadbalancer.healthcheck.path=/health'
+  - 'traefik.http.services.auth.loadbalancer.healthcheck.interval=30s'
+```
+
+### Métricas Traefik
+
+- **Request rate:** Requests por segundo por servicio
+- **Response time:** P50, P90, P95 por endpoint
+- **Error rate:** 4xx/5xx ratio
+- **Service availability:** Health check success rate
+
+```prometheus
+# Métricas exportadas a Prometheus
+traefik_service_requests_total
+traefik_service_request_duration_seconds
+traefik_service_server_up
+traefik_config_reloads_total
+```
+
+---
+
 ## Validación y Testing de RNFs
 
 ### Load testing (Artillery/K6)

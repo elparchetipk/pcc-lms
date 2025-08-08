@@ -1,0 +1,31 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" fill="#23a500"/>
+  <circle cx="100" cy="100" r="90" stroke="#ff7e05" stroke-width="8"/>
+  
+  <!-- Graduation Cap -->
+  <g transform="translate(100, 100)">
+    <!-- Cap base -->
+    <path d="M0 -20L-40 -35L0 -50L40 -35L0 -20Z" fill="#ffffff"/>
+    <!-- Cap sides -->
+    <path d="M-40 -35V-5C-40 2.5 -25 10 0 10C25 10 40 2.5 40 -5V-35" 
+          fill="#ffffff" opacity="0.9"/>
+    <!-- Tassel -->
+    <circle cx="35" cy="-25" r="3" fill="#ff7e05"/>
+    <line x1="35" y1="-22" x2="35" y2="-10" stroke="#ff7e05" stroke-width="2"/>
+  </g>
+  
+  <!-- Code Brackets -->
+  <g transform="translate(100, 130)">
+    <path d="M-25 -10L-35 0L-25 10" stroke="#ffffff" stroke-width="4" 
+          fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M25 -10L35 0L25 10" stroke="#ffffff" stroke-width="4" 
+          fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="170" font-family="Arial, sans-serif" font-size="16" 
+        font-weight="bold" text-anchor="middle" fill="#ffffff">
+    PCC
+  </text>
+</svg>
